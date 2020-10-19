@@ -1,15 +1,11 @@
 from django.http import HttpResponse
-
+from django.shortcuts import redirect, render
 from django.views import generic
+from django.contrib.auth import logout
+from django.contrib.auth.views import LogoutView
 
 from .models import Donation
 
-
-def index(request):
-    return HttpResponse("Welcome to the Donations Page!")
-
-class DonationView(generic.ListView):
-    template_name = 'donations/navbar.html'
-
-    def get_queryset(self):
-        return Donation.objects.all()
+def logout_view(request):
+    logout(request)
+    return redirect("donations:loggedout")
