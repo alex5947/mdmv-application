@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Bare - Start Bootstrap Template</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+<div class="container">
+    <a class="navbar-brand" href="#">Make a Change Donation Platform</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+        <a class="nav-link" href="#">Home
+            <span class="sr-only">(current)</span>
+        </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#">Services</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="#">Contact</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/donationlist">Donations</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+        </li>
+    </ul>
+    </div>
+</div>
+</nav>
+
+<br>
+
+<div class="d-flex justify-content-center">
+<h2>Post a Donation Request</h2>
+</div>
+
+<br>
+<form action="{% url 'donations:showform' %}" method="post">
+	{% csrf_token %}
+	<div class="d-flex justify-content-center">
+	<label><Strong>Name of Donation:</Strong></label>
+	</div>
+	<div class="d-flex justify-content-center">
+	<input type="text" name="name" size="30">
+	</div>
+    <br> <br>
+    <div class="d-flex justify-content-center">
+    <label><Strong>Donation Goal ($):</Strong></label>
+    </div>
+    <div class="d-flex justify-content-center">
+    <input type="number" name="goal" size="30">
+    </div>
+    <br> <br>
+    <div class="d-flex justify-content-center">
+    <label><Strong>Donation End Date:</Strong></label>
+    </div>
+    <div class="d-flex justify-content-center">
+    <input type="date" name="end_date">
+    </div>
+    <br><br>
+	<div class="d-flex justify-content-center">
+	<label><Strong>Description:</Strong></label> 
+	</div>
+	<div class="d-flex justify-content-center">
+	<textArea type="text" name="description" rows="10" cols="50" wrap="hard"></textArea>
+    </div>
+	<br> <br>
+	<div class="d-flex justify-content-center">
+	<button type="submit" class="btn btn-dark">Post Donation Request</button>
+	</div>
+</form>
+<br>
+
+<!-- Bootstrap core JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
