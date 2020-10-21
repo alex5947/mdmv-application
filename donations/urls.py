@@ -9,5 +9,8 @@ urlpatterns = [
      path('loggedout/', TemplateView.as_view(template_name="donations/loggedout.html"), name='loggedout'),
      path('donationform/', views.DonationsView.as_view(), name='donation_form'),
      path('donationlist/', views.DonationsListView.as_view(), name="donation_list"),
-     path('donationlist/showform', views.showform, name = "showform")
+     path('donationlist/showform', views.showform, name = "showform"),
+     path('makedonation/', views.makedonation, name="makedonation"),
+     path('charge/', views.charge, name='charge'),
+     path('success/<str:args>/', views.successMsg, name="success"),
 ]
