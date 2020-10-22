@@ -60,14 +60,10 @@
     <a href="/volunteer-post" class="btn btn-info" role="button">Post an Opportunity</a>
   </div>
 
-{% load socialaccount %}
+
 <html>
-    <head>
-        <title>Please Log In Before Proceeding</title>
-    </head>
     <body>
-        {% if user.is_authenticated %}
-        
+              
         <h1>Volunteering Opportunities:</h1>
 
         {% if volunteer_opportunities %}
@@ -87,12 +83,6 @@
         {% endif %}
 
 
-
-  <!--      <meta http-equiv = "refresh" content = "3;  URL = '/'" /> -->
-        {% else %}
-        <h1>Please Log In Before Proceeding</h1>
-        <a href="{% provider_login_url 'google' %}">Login with Google</a>
-        {% endif %}
 
     </body>
 </html>
