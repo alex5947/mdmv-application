@@ -2,13 +2,20 @@ language: python
 
 #cover all python versions for different devices
 python:
- - "2.7"
- - "3.4"
- - "3.5"
- - "3.6"     
- - "3.7"
  - "3.8" 
+
+install:
+- pip install -r requirements-travis.txt
 
 # command to run tests
 script:
-  - pytest
+- python manage.py test
+#
+deploy:
+  provider: heroku
+  app: project-2-23-donations
+  on:
+    repo: uva-cs3240-f20/project-2-23
+
+
+  
