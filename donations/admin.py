@@ -16,7 +16,7 @@ admin.site.register(Donation, DonationAdmin)
 
 class VolunteerPostAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ('title', 'date', 'time', 'description')})
+        (None, {'fields': ('title', 'date', 'start_time', 'end_time', 'description')})
     ]
 
 admin.site.register(VolunteerPost, VolunteerPostAdmin)

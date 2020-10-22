@@ -4,7 +4,6 @@ from django.db import models
 from django.db import models
 from django.utils import timezone
 
-
 # Create your models here.
 class Donation(models.Model):
     name = models.CharField(max_length=50, default = "")
@@ -13,9 +12,16 @@ class Donation(models.Model):
     end_date = models.DateField(default = datetime.date.today)
 
 class VolunteerPost(models.Model):
-    title = models.CharField(max_length=80, default = "")
-    name = models.CharField(max_length=30, default = "")
+    title = models.TextField(default = "")
+    name = models.TextField(default = "")
     date = models.DateField(default = datetime.date.today)
     start_time = models.TimeField(default = timezone.now)
     end_time = models.TimeField(default = timezone.now)
     description = models.TextField(default = "") 
+
+    def date_in_future(self):
+        now = timezone.now()
+        return now <= self.date
+
+    def end_time_after_start_time(self):
+        return self.start_time < self.end_time

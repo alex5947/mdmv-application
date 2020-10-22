@@ -6,6 +6,7 @@ from django.views import generic
 from django.contrib.auth import logout
 from django.contrib.auth.views import LogoutView
 from django.http import JsonResponse
+from django.utils import timezone
 
 from .forms import VolunteerForm
 
@@ -84,4 +85,7 @@ class VolunteerListView(generic.ListView):
     context_object_name = 'volunteer_opportunities'
 
     def get_queryset(self):
-        return VolunteerPost.objects.all()
+        return VolunteerPost.objects.filter(
+            date__gte=timezone.now(), 
+            # date__lte=timezone.now() + timezone.timedelta(days=100),
+        )
