@@ -5,8 +5,13 @@ from django.shortcuts import redirect, render
 from django.views import generic
 from django.contrib.auth import logout
 from django.contrib.auth.views import LogoutView
+from django.http import JsonResponse
 
 from .models import Donation
+
+import stripe
+
+stripe.api_key = "sk_test_51HelJXIC2I2MvSECp2y3PQgivhTUNzwM8CuqoYOpmTgUsqsqHZwitXuaqpkQYliH1C6VM8kvaB2HLdrGHkncousZ00wWWrZ4uk"
 
 def logout_view(request):
     logout(request)
@@ -35,3 +40,31 @@ class DonationsListView(generic.ListView):
     context_object_name = 'donation_list'
     def get_queryset(self):
         return Donation.objects.filter()
+
+def makedonation(request):
+	return render(request, 'donations/makedonation.html')
+
+
+def charge(request):
+	if request.method == 'POST':
+		print('Data:', request.POST)
+
+		amount = int(request.POST['amount'])
+
+		customer = stripe.Customer.create(
+			email=request.POST['email'],
+			name=request.POST['name'],
+			source=request.POST['stripeToken']
+			)
+		charge = stripe.Charge.create(
+			customer=customer,
+			amount=amount*100,
+			currency='usd',
+			description="Donation"
+			)
+	return redirect(reverse('donations:success', args=[amount]))
+
+
+def successMsg(request, args):
+	amount = args
+	return render(request, 'donations/success.html', {'amount':amount})
