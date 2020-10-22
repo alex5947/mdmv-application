@@ -6,7 +6,7 @@ python:
 
 install:
 - pip install -r requirements-travis.txt
-
+- pip install django-heroku
 # command to run tests
 script:
 - python manage.py test
