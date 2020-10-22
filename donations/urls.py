@@ -4,7 +4,7 @@ from . import views
 
 app_name = 'donations'
 urlpatterns = [
-     path('', TemplateView.as_view(template_name="donations/index.html")),
+     path('', TemplateView.as_view(template_name="donations/index.html"), name='homepage'),
      path('logout/', views.logout_view, name='logout'),
      path('loggedout/', TemplateView.as_view(template_name="donations/loggedout.html"), name='loggedout'),
      path('donationform/', views.DonationsView.as_view(), name='donation_form'),
@@ -13,4 +13,6 @@ urlpatterns = [
      path('makedonation/', views.makedonation, name="makedonation"),
      path('charge/', views.charge, name='charge'),
      path('success/<str:args>/', views.successMsg, name="success"),
+     path('volunteer-post/', views.VolunteerFormView.as_view(), name='volunteer-post'),
+     path('volunteer-list/', views.VolunteerListView.as_view(), name='volunteer-list'),
 ]

@@ -7,7 +7,9 @@ from django.contrib.auth import logout
 from django.contrib.auth.views import LogoutView
 from django.http import JsonResponse
 
-from .models import Donation
+from .forms import VolunteerForm
+
+from .models import Donation, VolunteerPost
 
 import stripe
 
@@ -68,3 +70,18 @@ def charge(request):
 def successMsg(request, args):
 	amount = args
 	return render(request, 'donations/success.html', {'amount':amount})
+
+class VolunteerFormView(generic.CreateView):
+    model = VolunteerPost
+    form_class = VolunteerForm
+    template_name = 'donations/volunteer_post.html'
+
+    def get_success_url(self):
+        return reverse('donations:homepage')
+
+class VolunteerListView(generic.ListView):
+    template_name = 'donations/volunteer_list.html'
+    context_object_name = 'volunteer_opportunities'
+
+    def get_queryset(self):
+        return VolunteerPost.objects.all()

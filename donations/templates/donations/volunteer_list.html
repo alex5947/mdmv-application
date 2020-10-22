@@ -37,6 +37,9 @@
             <a class="nav-link" href="#">Services</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/makedonation">Make Donation</a>
           </li>
           <li class="nav-item">
@@ -53,6 +56,10 @@
     </div>
   </nav>
 
+  <div class="text-right">
+    <a href="/volunteer-post" class="btn btn-info" role="button">Post an Opportunity</a>
+  </div>
+
 {% load socialaccount %}
 <html>
     <head>
@@ -60,11 +67,27 @@
     </head>
     <body>
         {% if user.is_authenticated %}
-        <div class="container">
-            <div align="center">
-                <h2> Welcome, {{ user.username }} ! <h2>
-            </div>
-        </div>
+        
+        <h1>Volunteering Opportunities:</h1>
+
+        {% if volunteer_opportunities %}
+          <ul class='list-group'>
+          {% for opportunity in volunteer_opportunities %}
+            <li class='list-group-item'>
+              Volunteer Job Title: {{ opportunity.title }}<br>
+              Volunteer Requester: {{ opportunity.name }}<br>
+              Date: {{ opportunity.date }}<br>
+              Time: {{ opportunity.start_time }} to {{ opportunity.end_time }}<br>
+              Job Description: {{ opportunity.description }}</li>
+          {% endfor %}
+          </ul>
+        
+        {% else %}
+          <p>No Volunteering Opportunities have been posted yet</p>
+        {% endif %}
+
+
+
   <!--      <meta http-equiv = "refresh" content = "3;  URL = '/'" /> -->
         {% else %}
         <h1>Please Log In Before Proceeding</h1>
@@ -73,12 +96,10 @@
 
     </body>
 </html>
-
   <!-- Bootstrap core JavaScript -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-
 </body>
 
 </html>
