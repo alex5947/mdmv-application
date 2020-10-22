@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Donation
+from .models import Donation, VolunteerPost
 
 
 
@@ -13,3 +13,10 @@ class DonationAdmin(admin.ModelAdmin):
     search_fields = ['description']
 
 admin.site.register(Donation, DonationAdmin)
+
+class VolunteerPostAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ('title', 'date', 'time', 'description')})
+    ]
+
+admin.site.register(VolunteerPost, VolunteerPostAdmin)
