@@ -19,3 +19,11 @@ class VolunteerPost(models.Model):
     start_time = models.TimeField(default = timezone.now)
     end_time = models.TimeField(default = timezone.now)
     description = models.TextField(default = "") 
+
+    def date_in_future(self):
+        now = timezone.now()
+        return now <= self.date
+
+    def end_time_after_start_time(self):
+        return self.start_time < self.end_time
+
