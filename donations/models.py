@@ -4,7 +4,6 @@ from django.db import models
 from django.db import models
 from django.utils import timezone
 
-
 # Create your models here.
 class Donation(models.Model):
     name = models.CharField(max_length=50, default = "")
@@ -26,4 +25,3 @@ class VolunteerPost(models.Model):
 
     def end_time_after_start_time(self):
         return self.start_time < self.end_time
-
