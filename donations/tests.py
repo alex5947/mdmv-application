@@ -1,4 +1,5 @@
 from django.test import TestCase, RequestFactory
+from django.urls import reverse
 
 from .models import VolunteerPost
 from .views import VolunteerFormView, VolunteerListView
@@ -59,3 +60,47 @@ class VolunteerPostTestCase(TestCase):
         post = VolunteerPost(start_time=start, end_time=end)
         self.assertIs(post.end_time_after_start_time(), False)
     
+class VolunteerListViewTests(TestCase):
+    def create_volunteer_post(date):
+        """
+        Create a volunteer post with a given date
+        """
+        return VolunteerPost.objects.create(
+            name=""
+        )
+
+    def test_no_volunteer_posts(self):
+        """
+        The volunteer list view displays a message when there are no posts
+        """    
+        response = self.client.get(reverse('donations:volunteer-list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No Volunteering Opportunities have been posted yet")
+        self.assertQuerysetEqual(response.context['volunteer_opportunities'], [])
+
+    def test_past_volunteer_post(self):
+        """
+        The volunteer list view doesn't display a volunteer post with a date in the past
+        """
+        past_post = VolunteerPost.objects.create(date=timezone.now() - datetime.timedelta(days=2))
+        response = self.client.get(reverse('donations:volunteer-list'))
+        self.assertContains(response, "No Volunteering Opportunities have been posted yet")
+        self.assertQuerysetEqual(response.context['volunteer_opportunities'], [])
+
+    def test_present_volunteer_post(self):
+        """
+        The volunteer list view displays a volunteer post with a date in the present
+        """
+        past_post = VolunteerPost.objects.create(date=timezone.now())
+        response = self.client.get(reverse('donations:volunteer-list'))
+        self.assertQuerysetEqual(response.context['volunteer_opportunities'], ['<VolunteerPost: VolunteerPost object (1)>'])
+
+    def test_future_volunteer_post(self):
+        """
+        The volunteer list view displays a volunteer post with a date in the future
+        """
+        past_post = VolunteerPost.objects.create(date=timezone.now() + datetime.timedelta(days=2))
+        response = self.client.get(reverse('donations:volunteer-list'))
+        self.assertQuerysetEqual(response.context['volunteer_opportunities'], ['<VolunteerPost: VolunteerPost object (1)>'])
+    
+
