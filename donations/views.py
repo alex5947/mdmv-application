@@ -85,4 +85,7 @@ class VolunteerListView(generic.ListView):
     context_object_name = 'volunteer_opportunities'
 
     def get_queryset(self):
-        return VolunteerPost.objects.filter(date__gte=timezone.now())
+        return VolunteerPost.objects.filter(
+            date__gte=timezone.now(), 
+            # date__lte=timezone.now() + timezone.timedelta(days=100),
+        )
