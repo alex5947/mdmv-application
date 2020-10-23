@@ -35,8 +35,9 @@ def showform(request):
     form = DonationForm(request.POST or None)
     if form.is_valid():
         form.save()
+        return HttpResponseRedirect(reverse('donations:donation_list'))
     context = {'form': form}
-    return HttpResponseRedirect(reverse('donations:donation_list'))
+    return render(request, 'donations/donation_form.html', context)
 
 class DonationsListView(generic.ListView):
     template_name = 'donations/donation_list.html'
