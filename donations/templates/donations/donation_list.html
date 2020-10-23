@@ -64,14 +64,15 @@
     {% if donation_list %}
         {% for donation in donation_list %}
         <div class="d-flex justify-content-center">
-        <div class="card text-center" style="width: 40rem;">
+        <div class="card" style="width: 40rem;">
             <div class="card-header">
               End Date: {{donation.end_date}}
             </div>
             <div class="card-body">
               <h5 class="card-title">{{donation.name}}</h5>
               <p class="card-text">{{donation.description}}</p>
-              <h6>Goal: ${{donation.goal}}</a>
+              <h6>Goal: ${{donation.goal}}</a> <br><br>
+              <button type="button" class="btn btn-dark">Donate</button>
             </div>
           </div>
         </div>

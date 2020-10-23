@@ -12,8 +12,8 @@ class Donation(models.Model):
     end_date = models.DateField(default = datetime.date.today)
 
 class VolunteerPost(models.Model):
-    title = models.TextField(default = "")
-    name = models.TextField(default = "")
+    title = models.TextField(default = "", max_length=50)
+    name = models.TextField(default = "", max_length=50)
     date = models.DateField(default = datetime.date.today)
     start_time = models.TimeField(default = timezone.now)
     end_time = models.TimeField(default = timezone.now)
