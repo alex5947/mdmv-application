@@ -13,6 +13,8 @@ script:
 #
 deploy:
   provider: heroku
+  api_key:
+    secure: d5e8f1e1-ac46-466e-82fe-e35fb1955c1a
   app: project-2-23-donations
   on:
     repo: uva-cs3240-f20/project-2-23
