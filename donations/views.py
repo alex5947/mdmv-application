@@ -18,7 +18,7 @@ stripe.api_key = "sk_test_51HelJXIC2I2MvSECp2y3PQgivhTUNzwM8CuqoYOpmTgUsqsqHZwit
 
 def logout_view(request):
     logout(request)
-    return redirect("donations:loggedout")
+    return redirect("donations:homepage")
 
 class DonationsView(generic.ListView):
     template_name = 'donations/donation_form.html'
