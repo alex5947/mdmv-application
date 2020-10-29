@@ -1,8 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'donations/base.html' %}
 {% block content %}
 
 {% load socialaccount %}
-
 <html>
     <head>
         <title>Please Log In Before Proceeding</title>
@@ -14,7 +13,7 @@
                 <h2> Welcome, {{ user.username }} ! <h2>
             </div>
         </div>
-  <!--      <meta http-equiv = "refresh" content = "3;  URL = '/'" /> -->
+  
         {% else %}
         <h1>Please Log In Before Proceeding</h1>
         <a href="{% provider_login_url 'google' %}">Login with Google</a>
