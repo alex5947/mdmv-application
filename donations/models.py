@@ -10,6 +10,12 @@ class Donation(models.Model):
     description = models.CharField(max_length=500, default = "")
     goal = models.IntegerField(default = 0)
     end_date = models.DateField(default = datetime.date.today)
+    user = models.CharField(max_length=50, default = "")
+
+    def date_in_future(self):
+        now = timezone.now()
+        return now <= self.date
+
 
 class VolunteerPost(models.Model):
     title = models.TextField(default = "", max_length=50)

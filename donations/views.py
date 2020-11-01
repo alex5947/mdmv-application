@@ -30,11 +30,14 @@ class DonationForm(forms.ModelForm):
     class Meta:
         model= Donation
         fields= ["name", "description", "goal", "end_date"]
+        exclude = ["user"]
 
 def showform(request):
     form = DonationForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        donation = form.save(commit = False)
+        donation.user = request.user
+        donation.save()
         return HttpResponseRedirect(reverse('donations:donation_list'))
     context = {'form': form}
     return render(request, 'donations/donation_form.html', context)
