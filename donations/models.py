@@ -1,4 +1,5 @@
 import datetime
+from django.contrib.auth.models import User
 
 from django.db import models
 from django.db import models
@@ -9,8 +10,10 @@ class Donation(models.Model):
     name = models.CharField(max_length=50, default = "")
     description = models.CharField(max_length=500, default = "")
     goal = models.IntegerField(default = 0)
+    total = models.IntegerField(default = 0)
     end_date = models.DateField(default = datetime.date.today)
-    user = models.CharField(max_length=50, default = "")
+    creator = models.CharField(max_length=50, default = "")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="donation", null=True, default=None)
 
     def date_in_future(self):
         now = timezone.now()

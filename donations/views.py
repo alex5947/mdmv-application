@@ -30,17 +30,20 @@ class DonationForm(forms.ModelForm):
     class Meta:
         model= Donation
         fields= ["name", "description", "goal", "end_date"]
-        exclude = ["user"]
+        exclude = ["creator"]
 
 def showform(request):
     form = DonationForm(request.POST or None)
     if form.is_valid():
         donation = form.save(commit = False)
-        donation.user = request.user
+        donation.creator = request.user
         donation.save()
         return HttpResponseRedirect(reverse('donations:donation_list'))
     context = {'form': form}
     return render(request, 'donations/donation_form.html', context)
+
+def saveform(response):
+    return HttpResponseRedirect(reverse('donations:homepage'))
 
 class DonationsListView(generic.ListView):
     template_name = 'donations/donation_list.html'
@@ -50,7 +53,6 @@ class DonationsListView(generic.ListView):
 
 def makedonation(request):
 	return render(request, 'donations/makedonation.html')
-
 
 def charge(request):
 	if request.method == 'POST':

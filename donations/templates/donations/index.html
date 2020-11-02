@@ -13,6 +13,26 @@
                 <h2> Welcome, {{ user.username }} ! <h2>
             </div>
         </div>
+        <br>
+        <div align='center'>    
+            <h4>Your Donations</h4>
+        </div>
+        <br>
+            {% if user.donation %}
+                {% for item in user.donation.all %}
+                <div class="d-flex justify-content-center">
+                    <div class="card" style="width: 40rem;">
+                        <div class="card-header">
+                            {{item.name}}
+                        </div>
+                        <div class="card-body">
+                          <p class="card-text">{{item.description}}</p>
+                          <h6>Goal: ${{item.goal}}</a> <br><br>
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
   
         {% else %}
         <h1>Please Log In Before Proceeding</h1>
