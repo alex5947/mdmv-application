@@ -50,9 +50,20 @@
 			<!-- Add form here -->
 			<form action="{% url 'donations:charge' %}" method="post" id="payment-form">
 				{% csrf_token %}
+				<br>
+				<div class="dropdown">
+					<button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  Select a Charity
+					</button>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						{% for donation in donation_list %}
+							<a class="dropdown-item" href="#">{{donation.name}}</a>
+						{% endfor %}
+					</div>
+				</div>
+				<br><br>
 				<div class="form-field-12">
 					<label for="amount">Choose Amount:</label>
-					<br>
 					<br>
 					<select required name="amount" id="amount">
 					  <option selected value="5">$5</option>
@@ -86,7 +97,8 @@
 			  <hr>
             <div class= "d-flex justify-content-center">
 				<input  class="myButton" style="background-color:#10a195" type="submit" value="Submit Payment" name="">
-            </div>
+			</div>
+
 			</form>
 
 			<script src="https://js.stripe.com/v3/"></script>

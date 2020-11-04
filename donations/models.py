@@ -13,12 +13,15 @@ class Donation(models.Model):
     total = models.IntegerField(default = 0)
     end_date = models.DateField(default = datetime.date.today)
     creator = models.CharField(max_length=50, default = "")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="donation", null=True, default=None)
 
     def date_in_future(self):
         now = timezone.now()
         return now <= self.date
 
+class UserDonation(models.Model):
+    name = models.CharField(max_length=50, default = "")
+    goal = models.IntegerField(default = 0)
+    total = models.IntegerField(default = 0)
 
 class VolunteerPost(models.Model):
     title = models.TextField(default = "", max_length=50)
@@ -27,6 +30,7 @@ class VolunteerPost(models.Model):
     start_time = models.TimeField(default = timezone.now)
     end_time = models.TimeField(default = timezone.now)
     description = models.TextField(default = "") 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def date_in_future(self):
         now = timezone.now()

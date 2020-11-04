@@ -26,13 +26,19 @@ class DonationsView(generic.ListView):
     def get_queryset(self):
         return Donation.objects.filter()
 
+class MakeDonationView(generic.ListView):
+    template_name = 'donations/makedonation.html'
+    context_object_name = 'donation_list'
+    def get_queryset(self):
+        return Donation.objects.filter()
+
 class DonationForm(forms.ModelForm):
     class Meta:
         model= Donation
         fields= ["name", "description", "goal", "end_date"]
         exclude = ["creator"]
 
-def showform(request):
+def donationform(request):
     form = DonationForm(request.POST or None)
     if form.is_valid():
         donation = form.save(commit = False)
@@ -45,6 +51,13 @@ def showform(request):
 def saveform(response):
     return HttpResponseRedirect(reverse('donations:homepage'))
 
+class DeleteDonationFormView(generic.DeleteView):
+    model = Donation
+    template_name = 'donations/delete_donation.html'
+
+    def get_success_url(self):
+        return reverse('donations:donation_list')
+
 class DonationsListView(generic.ListView):
     template_name = 'donations/donation_list.html'
     context_object_name = 'donation_list'
@@ -52,7 +65,7 @@ class DonationsListView(generic.ListView):
         return Donation.objects.filter()
 
 def makedonation(request):
-	return render(request, 'donations/makedonation.html')
+	return HttpResponseRedirect(reverse('donations:make_donation'))
 
 def charge(request):
 	if request.method == 'POST':
@@ -78,13 +91,30 @@ def successMsg(request, args):
 	amount = args
 	return render(request, 'donations/success.html', {'amount':amount})
 
-class VolunteerFormView(generic.CreateView):
+def volunteerform(request):
+    form = VolunteerForm(request.POST or None)
+    if form.is_valid():
+        opportunity = form.save(commit = False)
+        opportunity.user = request.user
+        opportunity.save()
+        return HttpResponseRedirect(reverse('donations:volunteer-list'))
+    context = {'form': form}
+    return render(request, 'donations/volunteer_post.html', context)
+
+class UpdateVolunteerFormView(generic.UpdateView):
     model = VolunteerPost
     form_class = VolunteerForm
-    template_name = 'donations/volunteer_post.html'
+    template_name = 'donations/update_volunteering.html'
 
     def get_success_url(self):
-        return reverse('donations:homepage')
+        return reverse('donations:volunteer-list')
+
+class DeleteVolunteerFormView(generic.DeleteView):
+    model = VolunteerPost
+    template_name = 'donations/delete_volunteering.html'
+
+    def get_success_url(self):
+        return reverse('donations:volunteer-list')
 
 class VolunteerListView(generic.ListView):
     template_name = 'donations/volunteer_list.html'

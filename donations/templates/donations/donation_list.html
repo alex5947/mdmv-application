@@ -14,8 +14,17 @@
         <div class="d-flex justify-content-center">
         <div class="card" style="width: 40rem;">
             <div class="card-header">
+              <div class='float-left'>
               End Date: {{donation.end_date}} <br>
               Posted By: {{donation.creator}}
+              </div>
+              {% if user.is_authenticated %}
+              {% if user.username == donation.creator %} 
+              <div class='float-right'>            
+                <a href="{% url 'donations:delete_donation' donation.pk %}" class ="btn btn-dark">Delete</a>
+              </div>  
+              {% endif %}
+              {% endif %}
             </div>
             <div class="card-body">
               <h5 class="card-title">{{donation.name}}</h5>
@@ -23,10 +32,7 @@
               <h6>Goal: ${{donation.goal}}</a> <br>
               <h6>Total Money Received: ${{donation.total}}</a> 
                 <br><br>
-                <form action="{% url 'donations:makedonation' %}" method="post">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-dark">Donate</button>
-                </form>
+                <a href="{% url 'donations:makedonation' %}" class="btn btn-dark">Donate</a>
             </div>
           </div>
         </div>

@@ -1,25 +1,40 @@
 {% extends 'donations/base.html' %}
 {% block content %}
 
+{% if user.is_authenticated %}
   <div class="text-right">
     <a href="/volunteer-post" class="btn btn-info" role="button">Post an Opportunity</a>
   </div>
-
+{% endif %}
 
 <html>
     <body>
               
         <h1>Volunteering Opportunities:</h1>
-
+       
         {% if volunteer_opportunities %}
           <ul class='list-group'>
           {% for opportunity in volunteer_opportunities %}
             <li class='list-group-item'>
-              Volunteer Job Title: {{ opportunity.title }}<br>
-              Volunteer Requester: {{ opportunity.name }}<br>
+              Volunteer Job Title: {{ opportunity.title }}
+
+              {% if user.is_authenticated %}
+                {% if user.id == opportunity.user.id %}
+                -
+                  <a href="{% url 'donations:update_volunteering' opportunity.pk %}">(Edit)</a>
+                  
+                  <a href="{% url 'donations:delete_volunteering' opportunity.pk %}">(Delete)</a>
+                {% endif %}
+              {% endif %}
+
+              <br>
+              Posted by: {{ opportunity.name }}<br>
               Date: {{ opportunity.date }}<br>
               Time: {{ opportunity.start_time }} to {{ opportunity.end_time }}<br>
-              Job Description: {{ opportunity.description }}</li>
+              Job Description: {{ opportunity.description }}
+              <br><br>
+              <button class="btn btn-secondary"> Add Opportunity</button>
+            </li><br>
           {% endfor %}
           </ul>
         
