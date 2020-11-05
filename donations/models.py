@@ -17,7 +17,7 @@ class Donation(models.Model):
 
     def date_in_future(self):
         now = timezone.now()
-        return now <= self.date
+        return now <= self.end_date
 
 class UserDonation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_donation", null=True)
@@ -28,8 +28,8 @@ class VolunteerPost(models.Model):
     title = models.TextField(default = "", max_length=50)
     name = models.TextField(default = "", max_length=50)
     date = models.DateField(default = datetime.date.today)
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    start_time = models.TimeField(null=True)
+    end_time = models.TimeField(null=True)
     description = models.TextField(default = "") 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
