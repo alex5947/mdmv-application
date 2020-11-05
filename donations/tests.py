@@ -1,8 +1,8 @@
 from django.test import TestCase, RequestFactory
 from django.urls import reverse
 
-from .models import VolunteerPost
-from .views import VolunteerFormView, VolunteerListView
+from .models import VolunteerPost, Donation
+from .views import VolunteerListView, DonationsListView
 
 import datetime
 from django.utils import timezone
@@ -104,4 +104,69 @@ class VolunteerListViewTests(TestCase):
         response = self.client.get(reverse('donations:volunteer-list'))
         self.assertQuerysetEqual(response.context['volunteer_opportunities'], ['<VolunteerPost: VolunteerPost object (1)>'])
     
+class DonationPostTestCase(TestCase):
+    def test_donation_end_date_in_past(self):
+        """
+        date_in_future() returns False for donations with end dates in the past
+        """
+        day = timezone.now() - datetime.timedelta(days=5)
+        past_post = Donation(end_date=day)
+        self.assertIs(past_post.date_in_future(), False)
+
+    def test_donation_end_date_in_present(self):
+        """
+        date_in_future() returns True for donations with end dates in the present
+        """
+        day = timezone.now() 
+        past_post = Donation(end_date=day)
+        self.assertIs(past_post.date_in_future(), True)
+
+    def test_donation_end_date_in_future(self):
+        """
+        date_in_future() returns False for donations with end dates in the future
+        """
+        day = timezone.now() + datetime.timedelta(days=123)
+        past_post = Donation(end_date=day)
+        self.assertIs(past_post.date_in_future(), True)
+
+class DonationListViewTests(TestCase):
+    def create_donation_post(end_date):
+        """
+        Create a Donation post with a given end_date
+        """
+        return Donation.objects.create()
+
+    def test_no_donation_posts(self):
+        """
+        The donation list view displays a message when there are no posts
+        """    
+        response = self.client.get(reverse('donations:donation_list'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No Donation Requests have been posted yet")
+        self.assertQuerysetEqual(response.context['donation_list'], [])
+
+    def test_past_donation_post(self):
+        """
+        The donation list view doesn't display a donation post with a date in the past
+        """
+        past_post = Donation.objects.create(end_date=timezone.now() - datetime.timedelta(days=2))
+        response = self.client.get(reverse('donations:donation_list'))
+        self.assertContains(response, "No Donation Requests have been posted yet")
+        self.assertQuerysetEqual(response.context['donation_list'], [])
+
+    def test_present_donation_post(self):
+        """
+        The donation list view displays a donation post with a date in the present
+        """
+        past_post = Donation.objects.create(end_date=timezone.now())
+        response = self.client.get(reverse('donations:donation_list'))
+        self.assertQuerysetEqual(response.context['donation_list'], ['<Donation: Donation object (1)>'])
+
+    def test_future_volunteer_post(self):
+        """
+        The donation list view displays a donation post with a date in the future
+        """
+        past_post = Donation.objects.create(end_date=timezone.now() + datetime.timedelta(days=2))
+        response = self.client.get(reverse('donations:donation_list'))
+        self.assertQuerysetEqual(response.context['donation_list'], ['<Donation: Donation object (1)>'])
 

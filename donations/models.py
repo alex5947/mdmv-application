@@ -1,5 +1,6 @@
 import datetime
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 from django.db import models
 from django.db import models
@@ -16,7 +17,7 @@ class Donation(models.Model):
 
     def date_in_future(self):
         now = timezone.now()
-        return now <= self.date
+        return now <= self.end_date
 
 class UserDonation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_donation", null=True)
@@ -27,8 +28,8 @@ class VolunteerPost(models.Model):
     title = models.TextField(default = "", max_length=50)
     name = models.TextField(default = "", max_length=50)
     date = models.DateField(default = datetime.date.today)
-    start_time = models.TimeField(default = timezone.now)
-    end_time = models.TimeField(default = timezone.now)
+    start_time = models.TimeField(null=True)
+    end_time = models.TimeField(null=True)
     description = models.TextField(default = "") 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
@@ -38,6 +39,11 @@ class VolunteerPost(models.Model):
 
     def end_time_after_start_time(self):
         return self.start_time < self.end_time
+
+    def clean(self):
+        if(self.start_time > self.end_time):
+            raise ValidationError('Start time should be earlier than End time')
+        return super().clean()
 
 class UserVolunteer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_volunteer", null=True)

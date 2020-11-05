@@ -67,7 +67,9 @@ class DonationsListView(generic.ListView):
     template_name = 'donations/donation_list.html'
     context_object_name = 'donation_list'
     def get_queryset(self):
-        return Donation.objects.filter()
+        return Donation.objects.filter(
+            end_date__gte=timezone.now(), 
+        )
 
 def charge(request, id):
     if request.method == 'POST':
