@@ -10,7 +10,7 @@ from django.utils import timezone
 
 from .forms import VolunteerForm
 
-from .models import Donation, VolunteerPost
+from .models import Donation, VolunteerPost, UserDonation
 
 import stripe
 
@@ -37,6 +37,11 @@ class DonationForm(forms.ModelForm):
         model= Donation
         fields= ["name", "description", "goal", "end_date"]
         exclude = ["creator"]
+
+class UserDonationForm(forms.ModelForm):
+    class Meta:
+        model= UserDonation
+        fields = ["name", "amount"]
 
 def donationform(request):
     form = DonationForm(request.POST or None)
@@ -71,6 +76,11 @@ def charge(request, id):
         amount = int(request.POST['amount'])
         donation.total += amount
         donation.save()
+
+        log = UserDonation(name=donation.name, amount=amount)
+        log.save()
+        request.user.user_donation.add(log)
+
         customer = stripe.Customer.create(
             email=request.POST['email'],
             name=request.POST['name'],
@@ -82,12 +92,12 @@ def charge(request, id):
             currency='usd',
             description="Donation"
             )
-        return redirect(reverse('donations:success', args=[amount]))
+        return redirect(reverse('donations:success', args=[amount, donation.name, donation.total]))
 
 
-def successMsg(request, args):
-	amount = args
-	return render(request, 'donations/success.html', {'amount':amount})
+def successMsg(request, arg1, arg2, arg3):
+	amount, name, total = arg1, arg2, arg3
+	return render(request, 'donations/success.html', {'amount':amount, 'name':name, 'total':total})
 
 def volunteerform(request):
     form = VolunteerForm(request.POST or None)

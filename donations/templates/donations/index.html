@@ -14,26 +14,36 @@
             </div>
         </div>
         <br>
-        <div align='center'>    
-            <h4>Your Donations</h4>
-        </div>
-        <br>
-            {% if user.donation %}
-                {% for item in user.donation.all %}
+        <div class='container'>
+            <div class='row'>
+            <div class='col'>
+            <div align='center'>    
+                <h4>Your Donations</h4>
+            </div>
+            <br>
+            {% if user.user_donation %}
+                {% for item in user.user_donation.all %}
                 <div class="d-flex justify-content-center">
-                    <div class="card" style="width: 40rem;">
+                    <div class="card" style="width: 20rem;">
                         <div class="card-header">
                             {{item.name}}
                         </div>
                         <div class="card-body">
-                          <p class="card-text">{{item.description}}</p>
-                          <h6>Goal: ${{item.goal}}</a> <br><br>
+                          <p class="card-text">Donated ${{item.amount}}</p>
                         </div>
-                      </div>
                     </div>
+                </div>
+                <br>
                 {% endfor %}
             {% endif %}
-  
+            </div>
+        <div class='col'>
+            <div align='center'>    
+                <h4>Volunteer Activities List</h4>
+            </div>
+        </div>
+        </div>
+        </div>
         {% else %}
         <h1>Please Log In Before Proceeding</h1>
         <a href="{% provider_login_url 'google' %}">Login with Google</a>

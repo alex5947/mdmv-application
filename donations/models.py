@@ -19,9 +19,9 @@ class Donation(models.Model):
         return now <= self.date
 
 class UserDonation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_donation", null=True)
     name = models.CharField(max_length=50, default = "")
-    goal = models.IntegerField(default = 0)
-    total = models.IntegerField(default = 0)
+    amount = models.IntegerField(default = 0)
 
 class VolunteerPost(models.Model):
     title = models.TextField(default = "", max_length=50)
