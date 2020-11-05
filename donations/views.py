@@ -10,7 +10,7 @@ from django.utils import timezone
 
 from .forms import VolunteerForm
 
-from .models import Donation, VolunteerPost, UserDonation
+from .models import Donation, VolunteerPost, UserDonation, UserVolunteer
 
 import stripe
 
@@ -133,3 +133,19 @@ class VolunteerListView(generic.ListView):
             date__gte=timezone.now(), 
             # date__lte=timezone.now() + timezone.timedelta(days=100),
         )
+
+class UserVolunteerForm(forms.ModelForm):
+    class Meta:
+        model= VolunteerPost
+        fields = ["title", "start_time", "end_time", "date"]
+
+def signup(request, id):
+    if request.method == 'POST':
+        opportunity = get_object_or_404(VolunteerPost, pk=id)
+
+        log = UserVolunteer(title=opportunity.title, start_time=opportunity.start_time, end_time=opportunity.end_time, date=opportunity.date)
+        log.save()
+        request.user.user_volunteer.add(log)
+
+        return redirect(reverse('donations:homepage'))
+    return HttpResponseRedirect(reverse('donations:volunteer-list'))

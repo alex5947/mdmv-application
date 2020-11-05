@@ -33,7 +33,10 @@
               Time: {{ opportunity.start_time }} to {{ opportunity.end_time }}<br>
               Job Description: {{ opportunity.description }}
               <br><br>
-              <button class="btn btn-secondary"> Add Opportunity</button>
+              <form action="{% url 'donations:signup' opportunity.pk %}" method="post">
+                {% csrf_token %}
+                <button type='submit' class="btn btn-secondary">Sign Up</button>
+              </form>
             </li><br>
           {% endfor %}
           </ul>

@@ -38,3 +38,10 @@ class VolunteerPost(models.Model):
 
     def end_time_after_start_time(self):
         return self.start_time < self.end_time
+
+class UserVolunteer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_volunteer", null=True)
+    title = models.TextField(default = "", max_length=50)
+    date = models.DateField(default = datetime.date.today)
+    start_time = models.TimeField(default = timezone.now)
+    end_time = models.TimeField(default = timezone.now)

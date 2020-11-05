@@ -41,6 +41,23 @@
             <div align='center'>    
                 <h4>Volunteer Activities List</h4>
             </div>
+            <br>
+            {% if user.user_volunteer %}
+                {% for item in user.user_volunteer.all %}
+                <div class="d-flex justify-content-center">
+                    <div class="card" style="width: 20rem;">
+                        <div class="card-header">
+                            {{item.title}}
+                        </div>
+                        <div class="card-body">
+                          <p class="card-text">Date: {{item.date}} </p>
+                          <p class="card-text">Time: {{item.start_time}} to {{item.end_time}}</p>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                {% endfor %}
+            {% endif %}
         </div>
         </div>
         </div>
