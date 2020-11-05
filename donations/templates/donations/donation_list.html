@@ -32,7 +32,7 @@
               <h6>Goal: ${{donation.goal}}</a> <br>
               <h6>Total Money Received: ${{donation.total}}</a> 
                 <br><br>
-                <a href="{% url 'donations:makedonation' %}" class="btn btn-dark">Donate</a>
+                <a href="{% url 'donations:makedonation' donation.pk %}" class="btn btn-dark">Donate</a>
             </div>
           </div>
         </div>

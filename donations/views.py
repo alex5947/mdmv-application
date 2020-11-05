@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django import forms
 from django.urls import reverse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views import generic
 from django.contrib.auth import logout
 from django.contrib.auth.views import LogoutView
@@ -28,9 +28,9 @@ class DonationsView(generic.ListView):
 
 class MakeDonationView(generic.ListView):
     template_name = 'donations/makedonation.html'
-    context_object_name = 'donation_list'
-    def get_queryset(self):
-        return Donation.objects.filter()
+    context_object_name = 'donation'
+    def get_queryset(self, *args, **kwargs):
+        return Donation.objects.filter(id=self.kwargs['pk'])
 
 class DonationForm(forms.ModelForm):
     class Meta:
@@ -64,27 +64,25 @@ class DonationsListView(generic.ListView):
     def get_queryset(self):
         return Donation.objects.filter()
 
-def makedonation(request):
-	return HttpResponseRedirect(reverse('donations:make_donation'))
-
-def charge(request):
-	if request.method == 'POST':
-		print('Data:', request.POST)
-
-		amount = int(request.POST['amount'])
-
-		customer = stripe.Customer.create(
-			email=request.POST['email'],
-			name=request.POST['name'],
-			source=request.POST['stripeToken']
-			)
-		charge = stripe.Charge.create(
-			customer=customer,
-			amount=amount*100,
-			currency='usd',
-			description="Donation"
-			)
-	return redirect(reverse('donations:success', args=[amount]))
+def charge(request, id):
+    if request.method == 'POST':
+        donation = get_object_or_404(Donation, pk=id)
+        print('Data:', request.POST)
+        amount = int(request.POST['amount'])
+        donation.total += amount
+        donation.save()
+        customer = stripe.Customer.create(
+            email=request.POST['email'],
+            name=request.POST['name'],
+            source=request.POST['stripeToken']
+            )
+        charge = stripe.Charge.create(
+            customer=customer,
+            amount=amount*100,
+            currency='usd',
+            description="Donation"
+            )
+        return redirect(reverse('donations:success', args=[amount]))
 
 
 def successMsg(request, args):
