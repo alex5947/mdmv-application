@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django import forms
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import generic
 from django.contrib.auth import logout
@@ -140,6 +140,9 @@ class UserVolunteerForm(forms.ModelForm):
     class Meta:
         model= VolunteerPost
         fields = ["title", "start_time", "end_time", "date"]
+    
+    def get_queryset(self):
+        return UserVolunteer.objects.values_list('title', flat=True).distinct()
 
 def signup(request, id):
     if request.method == 'POST':
@@ -151,3 +154,10 @@ def signup(request, id):
 
         return redirect(reverse('donations:homepage'))
     return HttpResponseRedirect(reverse('donations:volunteer-list'))
+
+class DeleteUserVolunteer(generic.DeleteView):
+    model = UserVolunteer
+    template_name = 'donations/delete_user_volunteer.html'
+
+    def get_success_url(self):
+        return reverse('donations:homepage')

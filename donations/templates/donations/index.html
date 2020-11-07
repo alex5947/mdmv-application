@@ -52,6 +52,7 @@
                         <div class="card-body">
                           <p class="card-text">Date: {{item.date}} </p>
                           <p class="card-text">Time: {{item.start_time}} to {{item.end_time}}</p>
+                          <a href="{% url 'donations:delete_user_volunteer' pk=item.id %}" class='btn btn-dark'>Remove</a>
                         </div>
                     </div>
                 </div>
