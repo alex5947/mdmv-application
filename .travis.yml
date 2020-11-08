@@ -1,23 +1,14 @@
 language: python
-
-#cover all python versions for different devices
 python:
- - "3.8" 
-
+- '3.8'
 install:
 - pip install -r requirements-travis.txt
-
-# command to run tests
 script:
 - python manage.py test
-#
 deploy:
   provider: heroku
   api_key:
-    secure: d5e8f1e1-ac46-466e-82fe-e35fb1955c1a
+    secure: QVwEvoEmwJJzv4CO4QdYmO6kMlXw52YkXhk7qq/aYe42cSSA0TsIeV+fNHJ14RY2NrM7O5czIlJ5u9QJRB2lZw1fSLQzvDJu16TuSdDXPMFO/FDuh6lIQR1fqQ+H55eqrO11qLopjhMklBzak/exXiuKnSJxjRRjji9MZS67JcN1plhOi4Yzf2Xf2ovMcqh1cjOlLGOSO0SaYYRJeMMn6u6fc6ziExL11QeNFNA8ELStlBVLof/wjGxU2puIoA7q7t7w6ywLAkTgkzZU9bhKFIEocUt728eafuyFI3bZn27Oc1G+Qnkt01h5M3ElF4RV5AHGHwOhqiibyCjB+utcQJ8xeu5gTMoEe88ruvlmScmr3avgTAykutSzuSa4Acl2de4Tc0xxd9rSAE1wr4NQKXOyxbj9BBpT3RHT7zdnnyLjwH+RDkuT1Zq0sAQFSqBzQGkRNp0axHlAZVsdW6pcVq1QaohFzxkWXrFI2v5X5kmp6GX0QI1aGKGweMFmxfo5vfAXgFc376USzuC9TnMP7yYnwgajDwBvSUd2KX0CuM/mFvOvKKjFhiXU1IiGZC/MULBWzDQ1QO+AEiGVY2VltIbeA+taIyheiOd/4UbxIR96mB6gTOx0tallFDM4+I12rp1wiIfU8/n1UHz8js/ijaEGzHwbQkJcMwBxMiQ8sRI=
   app: project-2-23-donations
   on:
     repo: uva-cs3240-f20/project-2-23
-
-
-  
