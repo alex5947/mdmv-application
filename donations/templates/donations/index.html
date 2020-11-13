@@ -1,6 +1,8 @@
 {% extends 'donations/base.html' %}
 {% block content %}
 
+{% load static %}
+
 {% load socialaccount %}
 <html>
     <head>
@@ -9,9 +11,23 @@
     <body>
         {% if user.is_authenticated %}
         <div class="container">
+            <br>
             <div align="center">
-                <h2> Welcome, {{ user.username }} ! <h2>
+                <div class="card border-dark mb-3" style="width: 60rem;">
+                    <h2 class="card-header">{{ user.username }}</h2>
+                    <div class="card-body">
+                      <h4 class="card-title">Welcome to your homepage!</h4>
+                      <p class="card-text"><blockquote class="blockquote text-left">
+                      <p class="mb-0">"The unselfish effort to bring cheer to others will be the beginning of a happier life for ourselves."</p>
+                        <footer class="blockquote-footer"><cite title="Source Title">Helen Keller</cite></footer>
+                      </blockquote>
+                      </p>
+                      <a href="{% url 'donations:donation_list' %}" class="btn btn-primary" style="margin-right:20px">Start Donating</a>
+                      <a href="{% url 'donations:volunteer-list' %}" class="btn btn-primary" style="margin-left:20px">Start Volunteering</a>
+                    </div>
+                  </div>
             </div>
+            <br>
         </div>
         <br>
         <div class='container'>
@@ -63,8 +79,14 @@
         </div>
         </div>
         {% else %}
-        <h1>Please Log In Before Proceeding</h1>
-        <a href="{% provider_login_url 'google' %}">Login with Google</a>
+        <link rel="stylesheet" type="text/css" href="{% static 'donations/style.css' %}">
+        <div align='center'>
+            <h1>Welcome to the Make a Change Donation Platform!</h2>
+                <img src="{% static 'donations/images/donate.gif' %}">
+            <h2>Please Log In Before Proceeding</h1>
+            <a href="{% provider_login_url 'google' %}">Login with Google</a>
+        </div>
+
         {% endif %}
 
     </body>
