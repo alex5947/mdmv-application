@@ -1,6 +1,8 @@
 {% extends 'donations/base.html' %}
 {% block content %}
 
+{% load static %}
+
 {% load socialaccount %}
 <html>
     <head>
@@ -63,8 +65,14 @@
         </div>
         </div>
         {% else %}
-        <h1>Please Log In Before Proceeding</h1>
-        <a href="{% provider_login_url 'google' %}">Login with Google</a>
+        <link rel="stylesheet" type="text/css" href="{% static 'donations/style.css' %}">
+        <div align='center'>
+            <h1>Welcome to the Make a Change Donation Platform!</h2>
+                <img src="{% static 'donations/images/donate.gif' %}">
+            <h2>Please Log In Before Proceeding</h1>
+            <a href="{% provider_login_url 'google' %}">Login with Google</a>
+        </div>
+
         {% endif %}
 
     </body>
