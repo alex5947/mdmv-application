@@ -1,49 +1,62 @@
 {% extends 'donations/base.html' %}
 {% block content %}
 
-{% if user.is_authenticated %}
-  <div class="text-right">
-    <a href="/volunteer-post" class="btn btn-info" role="button">Post an Opportunity</a>
-  </div>
-{% endif %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'donations/volunteering.css' %}">
 
 <html>
     <body>
               
-        <h1>Volunteering Opportunities:</h1>
-       
-        {% if volunteer_opportunities %}
-          <ul class='list-group'>
-          {% for opportunity in volunteer_opportunities %}
-            <li class='list-group-item'>
-              Volunteer Job Title: {{ opportunity.title }}
-
-              {% if user.is_authenticated %}
-                {% if user.id == opportunity.user.id %}
-                -
-                  <a href="{% url 'donations:update_volunteering' opportunity.pk %}">(Edit)</a>
-                  
-                  <a href="{% url 'donations:delete_volunteering' opportunity.pk %}">(Delete)</a>
-                {% endif %}
-              {% endif %}
-
-              <br>
-              Posted by: {{ opportunity.name }}<br>
-              Date: {{ opportunity.date }}<br>
-              Time: {{ opportunity.start_time }} to {{ opportunity.end_time }}<br>
-              Job Description: {{ opportunity.description }}
-              <br><br>
-              <form action="{% url 'donations:signup' opportunity.pk %}" method="post">
-                {% csrf_token %}
-                <button type='submit' class="btn btn-secondary">Sign Up</button>
-              </form>
-            </li><br>
-          {% endfor %}
-          </ul>
+        <div align='center'>
+          <h1>Volunteering Opportunities:</h1>
         
-        {% else %}
-          <p>No Volunteering Opportunities have been posted yet</p>
-        {% endif %}
+          {% if user.is_authenticated %}
+            <a href="/volunteer-post" class="btn btn-primary" role="button">Post an Opportunity</a>
+          {% endif %}
+        </div>
+        <br>
+
+        {% if volunteer_opportunities %}
+          {% for opportunity in volunteer_opportunities %}
+            <div class="d-flex justify-content-center">
+            <div class="card" style="width: 40rem;">
+                <div class="card-header">
+                <div class='float-left'>
+                  <h6>Volunteer Job Title: {{ opportunity.title }}
+                  {% if user.is_authenticated %}
+                    {% if user.id == opportunity.user.id %}
+                      -
+                      <a href="{% url 'donations:update_volunteering' opportunity.pk %}">(Edit)</a>
+                      <a href="{% url 'donations:delete_volunteering' opportunity.pk %}">(Delete)</a>
+                    {% endif %}
+                  {% endif %}
+                  </h6>
+                  <h6>Posted by: {{ opportunity.name }}</h6> 
+                </div>
+              </div>
+                <div class="card-body">
+                  <body class="card-title">
+                    Date: {{ opportunity.date }}<br>
+                    Time: {{ opportunity.start_time }} to {{ opportunity.end_time }}<br>
+                  </body>
+                  <br>
+                  <p class="card-text">
+                    Job Description:<br>
+                    {{ opportunity.description }}
+                  </p>
+                    <form action="{% url 'donations:signup' opportunity.pk %}" method="post">
+                      {% csrf_token %}
+                      <button type='submit' class="btn btn-primary">Sign Up</button>
+                    </form>
+                </div>
+              </div>
+            </div>
+            <br>
+        {% endfor %}
+        
+      {% else %}
+        <p>No Volunteering Opportunities have been posted yet</p>
+      {% endif %}
 
 
 
