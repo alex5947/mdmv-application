@@ -1,12 +1,12 @@
 h1 {
-    font-family: 'Trebuchet MS';
-    color:rgb(92, 231, 49);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: midnightblue;
     background-color: rgb(248, 204, 211);
 }
 
 h2 {
-    font-family: sans-serif;
-    color:rgb(125, 233, 92);
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: midnightblue;
 }
 
 body {
