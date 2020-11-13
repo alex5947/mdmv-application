@@ -84,7 +84,7 @@
             <h1>Welcome to the Make a Change Donation Platform!</h2>
                 <img src="{% static 'donations/images/donate.gif' %}">
             <h2>Please Log In Before Proceeding</h1>
-            <a href="{% provider_login_url 'google' %}">Login with Google</a>
+                <a href="{% provider_login_url 'google' %}" class="btn btn-primary" role="button">Login with Google</a>
         </div>
 
         {% endif %}
