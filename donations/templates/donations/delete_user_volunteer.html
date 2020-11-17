@@ -1,16 +1,17 @@
 {% extends 'donations/base.html' %}
 {% block content %}
-
-    <div class='header'>
-        <h1>Delete Volunteer Opportunity from Your Personal List</h1>
-    </div>
-
+    <br><br><br>
+    <div class='header text-center'>
+        <h3>Are you sure you want to remove this volunteering event?</h3>
+   
+        <br>
     <div class='form-group'>
         <form method='post'>
             {% csrf_token %}
-            <strong>Are you sure you want to delete?</strong><br>
-            <button class='btn btn-primary'>Delete!</button>
+            <button class='btn btn-primary' style="margin-right:10px">Remove</button>
+            <a href="{% url 'donations:homepage' %}" class='btn btn-primary' style="margin-left:10px">Cancel</a>
         </form>
     </div>
-
+    
+    </div>
 {% endblock %}

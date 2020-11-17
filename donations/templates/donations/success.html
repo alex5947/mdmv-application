@@ -35,13 +35,15 @@
 
 
 
-
+<div class="text-center">
+<br><br><br>
 <div id="box">
-	<h4>Thank you for your contribution of ${{amount}}! {{name}} now has ${{total}}</h4>
+	<h4>Thank you for your contribution of ${{amount}}!</h4>
+		<h4>{{name}} now has ${{total}}.</h4>
 </div>
-
+<br>
 <a href="{% url 'donations:donation_list' %}"class='btn btn-dark'>Back to Donations</a>
-
+</div>
 
 <script>
 	// Create a Stripe client.

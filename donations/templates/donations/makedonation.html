@@ -76,7 +76,6 @@
 				<br>
 				<div class="form-field-12">
 					<label for="amount">Choose Amount:</label>
-					<br>
 					<select required name="amount" id="amount">
 					  <option value="1">$1</option>
 					  <option selected value="5">$5</option>
@@ -87,12 +86,15 @@
 					</select>
 				</div>
 				<br>
+				<label>Email</label>:
 				<div class="form-field-6">
-					<input required type="text" name="email" placeholder="Email...">
+					
+					<input required type="text" name="email" value={{user.email}}>
 				</div>
 				<br>
+				<label>Name</label>:
 				<div class="form-field-6">
-					<input required type="text" name="name" placeholder="Name...">
+					<input required type="text" name="name" value={{user.username}}>
 				</div>
 		</div>
 		<div class="d-flex justify-content-left" style="margin: 50px 200px 0px 200px">

@@ -142,7 +142,8 @@ class UserVolunteerForm(forms.ModelForm):
         fields = ["title", "start_time", "end_time", "date"]
     
     def get_queryset(self):
-        return UserVolunteer.objects.values_list('title', flat=True).distinct()
+        # return UserVolunteer.objects.values_list('title', flat=True).distinct()
+        return UserVolunteer.objects.order_by('date').values_list('title').distinct()
 
 def signup(request, id):
     if request.method == 'POST':
