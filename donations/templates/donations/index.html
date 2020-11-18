@@ -19,11 +19,12 @@
                       <h4 class="card-title">Welcome to your homepage!</h4>
                       <p class="card-text"><blockquote class="blockquote text-left">
                       <p class="mb-0">"The unselfish effort to bring cheer to others will be the beginning of a happier life for ourselves."</p>
-                        <footer class="blockquote-footer"><cite title="Source Title">Helen Keller</cite></footer>
+                        <footer class="blockquote-footer text-center"><cite title="Source Title">Helen Keller</cite></footer>
                       </blockquote>
+                      <br>
                       </p>
-                      <a href="{% url 'donations:donation_list' %}" class="btn btn-primary" style="margin-right:20px">Start Donating</a>
-                      <a href="{% url 'donations:volunteer-list' %}" class="btn btn-primary" style="margin-left:20px">Start Volunteering</a>
+                      <a href="{% url 'donations:donation_list' %}" class="btn btn-dark" style="margin-right:20px">Start Donating</a>
+                      <a href="{% url 'donations:volunteer-list' %}" class="btn btn-dark" style="margin-left:20px">Start Volunteering</a>
                     </div>
                   </div>
             </div>
@@ -68,7 +69,7 @@
                         <div class="card-body">
                           <p class="card-text">Date: {{item.date}} </p>
                           <p class="card-text">Time: {{item.start_time}} to {{item.end_time}}</p>
-                          <a href="{% url 'donations:delete_user_volunteer' pk=item.id %}" class='btn btn-dark'>Remove</a>
+                          <a href="{% url 'donations:delete_user_volunteer' pk=item.id %}" class='btn btn-danger'>Remove</a>
                         </div>
                     </div>
                 </div>
@@ -82,9 +83,10 @@
         <link rel="stylesheet" type="text/css" href="{% static 'donations/style.css' %}">
         <div align='center'>
             <h1>Welcome to the Make a Change Donation Platform!</h2>
-                <img src="{% static 'donations/images/donate.gif' %}">
-            <h2>Please Log In Before Proceeding</h1>
-                <a href="{% provider_login_url 'google' %}" class="btn btn-primary" role="button">Login with Google</a>
+                <br><br><br>
+                <a href="{% provider_login_url 'google' %}" class="btn btn-dark" role="button">Login with Google to Proceed</a>
+                <br>
+                <img src="{% static 'donations/images/donate.gif' %}" style="width:300px;height:400px;">
         </div>
 
         {% endif %}

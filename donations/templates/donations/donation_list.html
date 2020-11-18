@@ -23,7 +23,7 @@
               {% if user.is_authenticated %}
               {% if user.username == donation.creator %} 
               <div class='float-right'>            
-                <a href="{% url 'donations:delete_donation' donation.pk %}" class ="btn btn-dark">Delete</a>
+                <a href="{% url 'donations:delete_donation' donation.pk %}" class ="btn btn-danger">Delete</a>
               </div>  
               {% endif %}
               {% endif %}
@@ -35,7 +35,7 @@
               <h6>Total Money Received: ${{donation.total}}</a> 
                 <br><br>
                 {% if user.is_authenticated %}
-                  <a href="{% url 'donations:makedonation' donation.pk %}" class="btn btn-dark">Donate</a>
+                  <a href="{% url 'donations:makedonation' donation.pk %}" class="btn btn-success">Donate</a>
                 {% endif %}
               </div>
           </div>

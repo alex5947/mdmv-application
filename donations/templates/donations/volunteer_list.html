@@ -26,26 +26,26 @@
                   {% if user.is_authenticated %}
                     {% if user.id == opportunity.user.id %}
                     <div class='float-right'>
-                      <a href="{% url 'donations:update_volunteering' opportunity.pk %}" class="btn btn-dark">Edit</a>
-                      <a href="{% url 'donations:delete_volunteering' opportunity.pk %}" class="btn btn-dark">Delete</a>
+                      <a href="{% url 'donations:update_volunteering' opportunity.pk %}" class="btn btn-primary">Edit</a>
+                      <a href="{% url 'donations:delete_volunteering' opportunity.pk %}" class="btn btn-danger">Delete</a>
                     </div>
                     {% endif %}
                   {% endif %}
               </div>
                 <div class="card-body">
                   <body class="card-title">
-                    Date: {{ opportunity.date }}<br>
-                    Time: {{ opportunity.start_time }} to {{ opportunity.end_time }}<br>
+                   <h6> Date: {{ opportunity.date }} </h6>
+                    <h6>Time: {{ opportunity.start_time }} to {{ opportunity.end_time }} </h6>
                   </body>
                   <br>
                   <p class="card-text">
-                    Job Description:<br>
+                    <h6>Job Description:</h6>
                     {{ opportunity.description }}
                   </p>
                     {% if user.is_authenticated %}
                       <form action="{% url 'donations:signup' opportunity.pk %}" method="post">
                         {% csrf_token %}
-                        <button type='submit' class="btn btn-dark">Sign Up</button>
+                        <button type='submit' class="btn btn-success">Sign Up</button>
                       </form>
                     {% endif %}
                   </div>
