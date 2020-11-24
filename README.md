@@ -1,0 +1,1 @@
+Thank you for using our micro-donations and micro-volunteering platform. This application serves two user classes: the charity organization members and the regular users. Charity organization members 
